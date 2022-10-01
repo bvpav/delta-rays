@@ -115,7 +115,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
       <h1>Question {currentQuestion + 1}</h1>
       <div>
         {game.data.questions[currentQuestion]!.choices.map((_, i) => (
-          <div>
+          <div key={i}>
             <span>Option {i + 1} </span>
             <button onClick={() => answerQuestion(i)}>
               {i === correctChoice! ? 'Correct' : 'Incorrect'}
