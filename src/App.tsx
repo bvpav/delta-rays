@@ -80,9 +80,37 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
   difficulty,
   id,
 }) => {
-  const game = trpc.game.useQuery({ difficulty, id });
+  const [currentQuestion, setCurrentQuestion] = useState(-1);
+  const [numCorrect, setNumCorrect] = useState(0);
+  const game = trpc.game.useQuery(
+    { difficulty, id },
+    {
+      onSuccess() {
+        if (currentQuestion < 0) setCurrentQuestion(0);
+      },
+    }
+  );
+  const numQuestions = game?.data?.questions?.length || 0;
 
-  return <pre>{JSON.stringify(game.data, null, 2)}</pre>;
+  return 0 <= currentQuestion && currentQuestion < numQuestions ? (
+    <>
+      <h1>Question {currentQuestion + 1}</h1>
+      <button onClick={() => setCurrentQuestion((q) => q + 1)}>
+        next question
+      </button>
+    </>
+  ) : numQuestions <= currentQuestion ? (
+    <>
+      <h1>
+        Score: {numCorrect}/{numQuestions}
+      </h1>
+      <Link href="/">
+        <a>
+          <button>New Game</button>
+        </a>
+      </Link>
+    </>
+  ) : null;
 };
 
 function App() {
