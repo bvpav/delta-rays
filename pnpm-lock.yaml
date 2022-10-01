@@ -12,6 +12,7 @@ specifiers:
   '@vercel/node': ^2.5.21
   '@vitejs/plugin-react': ^2.1.0
   isomorphic-fetch: ^3.0.0
+  nanoid: ^4.0.0
   react: ^18.2.0
   react-dom: ^18.2.0
   typescript: ^4.6.4
@@ -27,6 +28,7 @@ dependencies:
   '@trpc/react': 10.0.0-proxy-beta.10_sxbaiupdyaln4ngjk2ne6tly3m
   '@trpc/server': 10.0.0-proxy-beta.10
   isomorphic-fetch: 3.0.0
+  nanoid: 4.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   wouter: 2.8.0-alpha.2_react@18.2.0
@@ -1928,6 +1930,12 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
+
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   /node-fetch/2.6.7:
     resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}

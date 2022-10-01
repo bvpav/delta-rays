@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import './App.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { trpc } from './utils/trpc-client';
 import { httpBatchLink } from '@trpc/react';
 import { Link, Route } from 'wouter';
+import { nanoid } from 'nanoid';
 
 // XXX: [tRPC Docs](https://trpc.io/docs/v10/react) recommend using state for these, but I don't see the point
 const queryClient = new QueryClient();
@@ -40,27 +41,28 @@ function Images({ page }: { page: number }) {
 
 function HomePage() {
   const [pages, setPages] = useState(1);
+  const id = useMemo(() => nanoid(10), []);
 
   return (
     <>
       <Heading />
       <div>
         <h1>Select difficulty</h1>
-        <Link href="/easy/asd">
+        <Link href={`/easy/${id}`}>
           <a>
             <button>Easy</button>
           </a>
         </Link>
         <br />
 
-        <Link href="/medium/asd">
+        <Link href={`/medium/${id}`}>
           <a>
             <button>Medium</button>
           </a>
         </Link>
         <br />
 
-        <Link href="/hard/asd">
+        <Link href={`/hard/${id}`}>
           <a>
             <button>Hard</button>
           </a>
