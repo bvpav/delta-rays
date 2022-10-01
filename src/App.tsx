@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import './App.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { trpc } from './utils/trpc-client';
+import { InferProcedures, trpc } from './utils/trpc-client';
 import { httpBatchLink } from '@trpc/react';
 import { Link, Route } from 'wouter';
 import { nanoid } from 'nanoid';
@@ -76,6 +76,15 @@ function HomePage() {
   );
 }
 
+const GamePage: React.FC<InferProcedures['game']['input']> = ({
+  difficulty,
+  id,
+}) => {
+  const game = trpc.game.useQuery({ difficulty, id });
+
+  return <pre>{JSON.stringify(game.data, null, 2)}</pre>;
+};
+
 function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
@@ -86,13 +95,13 @@ function App() {
           </Route>
 
           <Route path="/easy/:id">
-            {({ id }: { id: string }) => <p>Easy {id}</p>}
+            {({ id }) => <GamePage difficulty="easy" id={id} />}
           </Route>
           <Route path="/medium/:id">
-            {({ id }: { id: string }) => <p>Medium {id}</p>}
+            {({ id }) => <GamePage difficulty="medium" id={id} />}
           </Route>
           <Route path="/hard/:id">
-            {({ id }: { id: string }) => <p>Hard {id}</p>}
+            {({ id }) => <GamePage difficulty="hard" id={id} />}
           </Route>
         </div>
       </QueryClientProvider>

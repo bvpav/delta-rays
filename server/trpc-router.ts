@@ -25,6 +25,35 @@ export const appRouter = t.router({
       };
       return obj.body.map((o) => o.location);
     }),
+  game: t.procedure
+    .input(
+      z.object({
+        id: z.string(),
+        difficulty: z.union([
+          z.literal('easy'),
+          z.literal('medium'),
+          z.literal('hard'),
+        ]),
+      })
+    )
+    .query(async ({ input }) => {
+      const numQuestions = input.difficulty === 'easy' ? 5 : 10;
+      const optsPerQuestion = input.difficulty === 'easy' ? 2 : 3;
+      const canHaveNoAnswer = input.difficulty === 'hard';
+      // const seed = input.difficulty + input.id;
+
+      const wireframe = Array.from({ length: numQuestions }).map((_, i) => ({
+        choices: Array.from({ length: optsPerQuestion }).map(() => ({})),
+        correctChoiceIdx: canHaveNoAnswer
+          ? Math.floor(Math.random() * (optsPerQuestion + 2)) - 2
+          : Math.floor(Math.random() * optsPerQuestion),
+      }));
+
+      return {
+        questions: wireframe,
+        canHaveNoAnswer,
+      };
+    }),
 });
 
 export type AppRouter = typeof appRouter;
