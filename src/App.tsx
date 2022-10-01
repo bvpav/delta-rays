@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import './App.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { InferProcedures, trpc } from './utils/trpc-client';
 import { httpBatchLink } from '@trpc/react';
@@ -40,38 +39,41 @@ function HomePage() {
 
   return (
     <>
-      <div>
-        <h1>Select difficulty</h1>
-        <Link href={`/easy/${id}`}>
-          <a>
-            <button>Easy</button>
-          </a>
+      <div className="flex flex-col items-center">
+        <h1 className="text-5xl font-bold mb-7">Select difficulty</h1>
+        <Link
+          href={`/easy/${id}`}
+          className="bg-yellow-500 text-gray-900 hover:bg-yellow-300 px-8 py-2 text-2xl font-semibold"
+        >
+          Easy
         </Link>
         <br />
 
-        <Link href={`/medium/${id}`}>
-          <a>
-            <button>Medium</button>
-          </a>
+        <Link
+          href={`/medium/${id}`}
+          className="bg-yellow-500 text-gray-900 hover:bg-yellow-300 px-8 py-2 text-2xl font-semibold"
+        >
+          Medium
         </Link>
         <br />
 
-        <Link href={`/hard/${id}`}>
-          <a>
-            <button>Hard</button>
-          </a>
+        <Link
+          href={`/hard/${id}`}
+          className="bg-yellow-500 text-gray-900 hover:bg-yellow-300 px-8 py-2 text-2xl font-semibold"
+        >
+          Hard
         </Link>
         <br />
       </div>
       <br />
       <br />
 
-      <p className="read-the-docs">pics lmao</p>
+      {/* <p className="read-the-docs">pics lmao</p>
       {Array.from({ length: pages }).map((_, page) => (
         <Images page={page} key={page} />
       ))}
       <br />
-      <button onClick={() => setPages((p) => p + 1)}>show more</button>
+      <button onClick={() => setPages((p) => p + 1)}>show more</button> */}
     </>
   );
 }
@@ -153,7 +155,7 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <div className="App">
+        <div className="flex m-0 p-0 flex-col w-full h-[100vh] justify-center items-center">
           <Route path="/">
             <HomePage />
           </Route>
