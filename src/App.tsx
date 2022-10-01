@@ -21,6 +21,18 @@ function Heading() {
   return <h1>{message.data?.msg || 'Loading...'}</h1>;
 }
 
+function Images({ page }: { page: number }) {
+  const images = trpc.images.useQuery({ page });
+
+  return (
+    <>
+      {(images.data || []).map((src) => (
+        <img src={src} alt="image of space" key={src} />
+      ))}
+    </>
+  );
+}
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -48,6 +60,8 @@ function App() {
           <p className="read-the-docs">
             Click on the Vite and React logos to learn more
           </p>
+
+          <Images page={0} />
         </div>
       </QueryClientProvider>
     </trpc.Provider>

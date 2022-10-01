@@ -15,6 +15,7 @@ specifiers:
   typescript: ^4.6.4
   vercel: ^28.4.5
   vite: ^3.1.0
+  zod: ^3.19.1
 
 dependencies:
   '@tanstack/react-query': 4.8.0_biqbaboplfbrettd7655fr4n2y
@@ -24,6 +25,7 @@ dependencies:
   '@trpc/server': 10.0.0-proxy-beta.10
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  zod: 3.19.1
 
 devDependencies:
   '@types/react': 18.0.21
@@ -2559,3 +2561,7 @@ packages:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}
     engines: {node: '>=6'}
     dev: true
+
+  /zod/3.19.1:
+    resolution: {integrity: sha512-LYjZsEDhCdYET9ikFu6dVPGp2YH9DegXjdJToSzD9rO6fy4qiRYFoyEYwps88OseJlPyl2NOe2iJuhEhL7IpEA==}
+    dev: false
