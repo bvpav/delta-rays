@@ -1,6 +1,7 @@
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
 import 'isomorphic-fetch';
+import mersenne from '../src/utils/mersenne';
 
 const t = initTRPC.create();
 
@@ -40,13 +41,13 @@ export const appRouter = t.router({
       const numQuestions = input.difficulty === 'easy' ? 5 : 10;
       const optsPerQuestion = input.difficulty === 'easy' ? 2 : 3;
       const canHaveNoAnswer = input.difficulty === 'hard';
-      // const seed = input.difficulty + input.id;
+      const rng = mersenne(input.difficulty + input.id);
 
       const wireframe = Array.from({ length: numQuestions }).map((_, i) => ({
         choices: Array.from({ length: optsPerQuestion }).map(() => ({})),
         correctChoiceIdx: canHaveNoAnswer
-          ? Math.floor(Math.random() * (optsPerQuestion + 2)) - 2
-          : Math.floor(Math.random() * optsPerQuestion),
+          ? rng.range(-2, optsPerQuestion)
+          : rng.range(0, optsPerQuestion),
       }));
 
       return {
