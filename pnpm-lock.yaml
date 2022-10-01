@@ -6,6 +6,7 @@ specifiers:
   '@trpc/next': 10.0.0-proxy-beta.10
   '@trpc/react': 10.0.0-proxy-beta.10
   '@trpc/server': 10.0.0-proxy-beta.10
+  '@types/node': ^18.7.23
   '@types/react': ^18.0.17
   '@types/react-dom': ^18.0.6
   '@vercel/node': ^2.5.21
@@ -30,6 +31,7 @@ dependencies:
   zod: 3.19.1
 
 devDependencies:
+  '@types/node': 18.7.23
   '@types/react': 18.0.21
   '@types/react-dom': 18.0.6
   '@vercel/node': 2.5.21
