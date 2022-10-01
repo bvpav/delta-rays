@@ -84,13 +84,45 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
   const [numCorrect, setNumCorrect] = useState(0);
   const game = trpc.game.useQuery({ difficulty, id });
   const numQuestions = game?.data?.questions?.length || 0;
+  const [currentChoice, setCurrentChoice] = useState<
+    number | undefined | null
+  >();
+  const correctChoice = game.data?.questions[currentQuestion]?.correctChoiceIdx;
 
-  return 0 <= currentQuestion && currentQuestion < numQuestions ? (
+  function answerQuestion(choice: number | null) {
+    if (currentChoice !== undefined) return;
+    setCurrentChoice(choice);
+    // setCorrectChoice somehow here
+    if (choice === correctChoice) {
+      setNumCorrect((c) => c + 1);
+    }
+  }
+
+  function nextQuestion() {
+    setCurrentChoice(undefined);
+    // unset correct choice maybe?
+    setCurrentQuestion((q) => q + 1);
+  }
+
+  return game.data && 0 <= currentQuestion && currentQuestion < numQuestions ? (
     <>
       <h1>Question {currentQuestion + 1}</h1>
-      <button onClick={() => setCurrentQuestion((q) => q + 1)}>
-        next question
-      </button>
+      <div>
+        {game.data.questions[currentQuestion]!.choices.map((_, i) => (
+          <div>
+            <span>Option {i + 1} </span>
+            <button onClick={() => answerQuestion(i)}>
+              {i === correctChoice! ? 'Correct' : 'Incorrect'}
+            </button>
+          </div>
+        ))}
+      </div>
+      {currentChoice !== undefined &&
+        correctChoice !== undefined &&
+        (currentChoice === correctChoice ? <p>Correct</p> : <p>Incorrect</p>)}
+      {currentChoice !== undefined && (
+        <button onClick={nextQuestion}>next question</button>
+      )}
     </>
   ) : game.data && numQuestions <= currentQuestion ? (
     <>
