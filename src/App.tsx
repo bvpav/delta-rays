@@ -80,9 +80,15 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
   difficulty,
   id,
 }) => {
+  const game = trpc.game.useQuery(
+    { difficulty, id },
+    {
+      staleTime: Infinity,
+    }
+  );
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [numCorrect, setNumCorrect] = useState(0);
-  const game = trpc.game.useQuery({ difficulty, id });
   const numQuestions = game?.data?.questions?.length || 0;
   const [currentChoice, setCurrentChoice] = useState<
     number | undefined | null
