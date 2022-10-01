@@ -1,5 +1,7 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
+import * as trpcNext from '@trpc/server/adapters/next';
+import { appRouter } from '../../server/trpc-router';
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
-  res.status(200).json({ msg: 'this will be trpc' });
-}
+export default trpcNext.createNextApiHandler({
+  router: appRouter,
+  createContext: () => ({}),
+});
