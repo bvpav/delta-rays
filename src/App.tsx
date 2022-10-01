@@ -117,11 +117,16 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
           </div>
         ))}
       </div>
+      {game.data.canHaveNoAnswer && (
+        <button onClick={() => answerQuestion(null)}>None of the above</button>
+      )}
       {currentChoice !== undefined &&
         correctChoice !== undefined &&
         (currentChoice === correctChoice ? <p>Correct</p> : <p>Incorrect</p>)}
       {currentChoice !== undefined && (
-        <button onClick={nextQuestion}>next question</button>
+        <button onClick={nextQuestion}>
+          {currentQuestion < numQuestions - 1 ? 'Next Question' : 'Show Score'}
+        </button>
       )}
     </>
   ) : game.data && numQuestions <= currentQuestion ? (

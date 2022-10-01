@@ -43,10 +43,15 @@ export const appRouter = t.router({
       const canHaveNoAnswer = input.difficulty === 'hard';
       const rng = mersenne(input.difficulty + input.id);
 
+      function generateHardAnswer() {
+        const n = rng.range(-2, optsPerQuestion);
+        return n < 0 ? null : n;
+      }
+
       const wireframe = Array.from({ length: numQuestions }).map((_, i) => ({
         choices: Array.from({ length: optsPerQuestion }).map(() => ({})),
         correctChoiceIdx: canHaveNoAnswer
-          ? rng.range(-2, optsPerQuestion)
+          ? generateHardAnswer()
           : rng.range(0, optsPerQuestion),
       }));
 
