@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { InferProcedures, trpc } from "./utils/trpc-client";
-import { httpBatchLink } from "@trpc/react";
-import { Link, Route } from "wouter";
-import { nanoid } from "nanoid";
+import { useMemo, useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { InferProcedures, trpc } from './utils/trpc-client';
+import { httpBatchLink } from '@trpc/react';
+import { Link, Route } from 'wouter';
+import { nanoid } from 'nanoid';
 
 // XXX: [tRPC Docs](https://trpc.io/docs/v10/react) recommend using state for these, but I don't see the point
 const queryClient = new QueryClient();
@@ -11,7 +11,7 @@ const trpcClient = trpc.createClient({
   links: [
     // TODO: figure out how to use vercel deployment if running w/o `vercel dev`
     httpBatchLink({
-      url: "/api/trpc",
+      url: '/api/trpc',
     }),
   ],
 });
@@ -40,7 +40,9 @@ function HomePage() {
   return (
     <>
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="mb-12 text-7xl font-bold">Select difficulty</h1>
+        <h1 className="yellow-400 mb-12 font-alatsi text-7xl font-bold tracking-wide">
+          Select difficulty
+        </h1>
         <Link
           href={`/easy/${id}`}
           className="w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-md hover:shadow-yellow-200"
@@ -78,7 +80,7 @@ function HomePage() {
   );
 }
 
-const GamePage: React.FC<InferProcedures["game"]["input"]> = ({
+const GamePage: React.FC<InferProcedures['game']['input']> = ({
   difficulty,
   id,
 }) => {
@@ -120,7 +122,7 @@ const GamePage: React.FC<InferProcedures["game"]["input"]> = ({
           <div key={i}>
             <span>Option {i + 1} </span>
             <button onClick={() => answerQuestion(i)}>
-              {i === correctChoice! ? "Correct" : "Incorrect"}
+              {i === correctChoice! ? 'Correct' : 'Incorrect'}
             </button>
           </div>
         ))}
@@ -133,7 +135,7 @@ const GamePage: React.FC<InferProcedures["game"]["input"]> = ({
         (currentChoice === correctChoice ? <p>Correct</p> : <p>Incorrect</p>)}
       {currentChoice !== undefined && (
         <button onClick={nextQuestion}>
-          {currentQuestion < numQuestions - 1 ? "Next Question" : "Show Score"}
+          {currentQuestion < numQuestions - 1 ? 'Next Question' : 'Show Score'}
         </button>
       )}
     </>
