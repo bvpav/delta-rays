@@ -21,7 +21,12 @@ function Heading() {
 }
 
 function Images({ page }: { page: number }) {
-  const images = trpc.images.useQuery({ page });
+  const images = trpc.images.useQuery(
+    { page },
+    {
+      staleTime: 5 * 60 * 1000,
+    }
+  );
 
   return (
     <>
