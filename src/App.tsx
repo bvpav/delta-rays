@@ -39,7 +39,7 @@ function HomePage() {
 
   return (
     <>
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="mb-12 text-7xl font-bold">Select difficulty</h1>
         <Link
           href={`/easy/${id}`}
