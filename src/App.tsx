@@ -17,11 +17,6 @@ const trpcClient = trpc.createClient({
   ],
 });
 
-function Heading() {
-  const message = trpc.heading.useQuery();
-  return <h1>{message.data?.heading || 'Loading...'}</h1>;
-}
-
 function Images({ page }: { page: number }) {
   const images = trpc.images.useQuery(
     { page },
@@ -45,7 +40,6 @@ function HomePage() {
 
   return (
     <>
-      <Heading />
       <div>
         <h1>Select difficulty</h1>
         <Link href={`/easy/${id}`}>

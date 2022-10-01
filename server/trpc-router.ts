@@ -5,7 +5,6 @@ import 'isomorphic-fetch';
 const t = initTRPC.create();
 
 export const appRouter = t.router({
-  heading: t.procedure.query(() => ({ heading: 'Haqrecercnerq' })),
   images: t.procedure
     .input(
       z.object({
