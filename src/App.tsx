@@ -80,16 +80,9 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
   difficulty,
   id,
 }) => {
-  const [currentQuestion, setCurrentQuestion] = useState(-1);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
   const [numCorrect, setNumCorrect] = useState(0);
-  const game = trpc.game.useQuery(
-    { difficulty, id },
-    {
-      onSuccess() {
-        if (currentQuestion < 0) setCurrentQuestion(0);
-      },
-    }
-  );
+  const game = trpc.game.useQuery({ difficulty, id });
   const numQuestions = game?.data?.questions?.length || 0;
 
   return 0 <= currentQuestion && currentQuestion < numQuestions ? (
@@ -99,7 +92,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
         next question
       </button>
     </>
-  ) : numQuestions <= currentQuestion ? (
+  ) : game.data && numQuestions <= currentQuestion ? (
     <>
       <h1>
         Score: {numCorrect}/{numQuestions}
