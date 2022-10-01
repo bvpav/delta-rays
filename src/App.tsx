@@ -44,8 +44,9 @@ function App() {
           <p className="read-the-docs">pics lmao</p>
 
           {Array.from({ length: pages }).map((_, page) => (
-            <Images page={page} />
+            <Images page={page} key={page} />
           ))}
+          <br />
           <button onClick={() => setPages((p) => p + 1)}>show more</button>
         </div>
       </QueryClientProvider>

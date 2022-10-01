@@ -1,5 +1,6 @@
 import { initTRPC } from '@trpc/server';
 import { z } from 'zod';
+import 'isomorphic-fetch';
 
 const t = initTRPC.create();
 
