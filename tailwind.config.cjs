@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         alatsi: ['Alatsi', 'sans-serif'],
+        opensans: ['Open Sans', 'sans-serif'],
       },
     },
   },
