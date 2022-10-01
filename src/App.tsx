@@ -9,6 +9,7 @@ import { httpBatchLink } from '@trpc/react';
 const queryClient = new QueryClient();
 const trpcClient = trpc.createClient({
   links: [
+    // TODO: figure out how to use vercel deployment if running w/o `vercel dev`
     httpBatchLink({
       url: '/api/trpc',
     }),
