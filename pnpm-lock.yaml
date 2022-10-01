@@ -17,6 +17,7 @@ specifiers:
   typescript: ^4.6.4
   vercel: ^28.4.5
   vite: ^3.1.0
+  wouter: 2.8.0-alpha.2
   zod: ^3.19.1
 
 dependencies:
@@ -28,6 +29,7 @@ dependencies:
   isomorphic-fetch: 3.0.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  wouter: 2.8.0-alpha.2_react@18.2.0
   zod: 3.19.1
 
 devDependencies:
@@ -2538,6 +2540,14 @@ packages:
     dependencies:
       string-width: 4.2.3
     dev: true
+
+  /wouter/2.8.0-alpha.2_react@18.2.0:
+    resolution: {integrity: sha512-aPsL5m5rW9RiceClOmGj6t5gn9Ut2TJVr98UDi1u9MIRNYiYVflg6vFIjdDYJ4IAyH0JdnkSgGwfo0LQS3k2zg==}
+    peerDependencies:
+      react: '>=16.8.0'
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /wrap-ansi/7.0.0:
     resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
