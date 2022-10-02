@@ -152,7 +152,6 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
     }
   );
 
-  return <GameOverScreen score={10} maxScore={10} />;
   return <GameScreen game={game.data} />;
 };
 
