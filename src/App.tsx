@@ -45,7 +45,7 @@ function HomePage() {
         </h1>
         <Link
           href={`/easy/${id}`}
-          className="w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-md hover:shadow-yellow-200"
+          className="w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
         >
           Easy
         </Link>
@@ -53,7 +53,7 @@ function HomePage() {
 
         <Link
           href={`/medium/${id}`}
-          className="w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-md hover:shadow-yellow-200"
+          className="w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
         >
           Medium
         </Link>
@@ -61,7 +61,7 @@ function HomePage() {
 
         <Link
           href={`/hard/${id}`}
-          className="w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-md hover:shadow-yellow-200"
+          className="w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
         >
           Hard
         </Link>
