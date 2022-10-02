@@ -88,15 +88,16 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
     { difficulty, id },
     {
       staleTime: Infinity,
+      cacheTime: Infinity,
     }
   );
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [numCorrect, setNumCorrect] = useState(0);
   const numQuestions = game?.data?.questions?.length || 0;
-  const [currentChoice, setCurrentChoice] = useState<
-    number | undefined | null
-  >();
+  const [currentChoice, setCurrentChoice] = useState<number | undefined | null>(
+    0
+  );
   const correctChoice = game.data?.questions[currentQuestion]?.correctChoiceIdx;
 
   function answerQuestion(choice: number | null) {
@@ -116,25 +117,49 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
 
   return game.data && 0 <= currentQuestion && currentQuestion < numQuestions ? (
     <>
-      <h1>Question {currentQuestion + 1}</h1>
-      <div>
+      <h1 className="mb-10 text-center font-alatsi text-5xl">
+        Which image was taken by the{' '}
+        <span className="text-yellow-500">James Webb Space Telescope</span>?
+      </h1>
+      <div className="flex flex-col gap-7 lg:flex-row lg:gap-10">
         {game.data.questions[currentQuestion]!.choices.map((_, i) => (
-          <div key={i}>
-            <span>Option {i + 1} </span>
-            <button onClick={() => answerQuestion(i)}>
+          <div
+            key={i}
+            className="flex flex-col items-center gap-3 bg-white px-6 pt-3 pb-5 text-center text-slate-900"
+          >
+            <span className="text-xl font-semibold">Image {i + 1} </span>
+            <div className="h-64 w-96 bg-black md:h-96 md:w-96"></div>
+            <button
+              onClick={() => answerQuestion(i)}
+              className="min-w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+            >
               {i === correctChoice! ? 'Correct' : 'Incorrect'}
             </button>
           </div>
         ))}
       </div>
       {game.data.canHaveNoAnswer && (
-        <button onClick={() => answerQuestion(null)}>None of the above</button>
+        <button
+          onClick={() => answerQuestion(null)}
+          className="min-w-40 mt-8 bg-yellow-500 px-5 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+        >
+          None of the above
+        </button>
       )}
-      {currentChoice !== undefined &&
-        correctChoice !== undefined &&
-        (currentChoice === correctChoice ? <p>Correct</p> : <p>Incorrect</p>)}
+      {currentChoice !== undefined && correctChoice !== undefined && (
+        <div className="my-10 w-1/2 bg-green-200 p-5 text-center font-alatsi text-xl font-bold uppercase">
+          {currentChoice === correctChoice ? (
+            <p className="text-green-900">Correct!</p>
+          ) : (
+            <p className="text-red-900">Incorrect!</p>
+          )}
+        </div>
+      )}
       {currentChoice !== undefined && (
-        <button onClick={nextQuestion}>
+        <button
+          onClick={nextQuestion}
+          className="min-w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+        >
           {currentQuestion < numQuestions - 1 ? 'Next Question' : 'Show Score'}
         </button>
       )}
