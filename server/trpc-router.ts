@@ -2,6 +2,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import { z } from 'zod';
 import 'isomorphic-fetch';
 import mersenne, { RNG } from '../src/utils/mersenne';
+import rushedData from '../src/utils/rushed-data';
 
 const t = initTRPC.create();
 
@@ -32,7 +33,9 @@ export const appRouter = t.router({
 
       return {
         questions: wireframe.map((q) =>
-          q.choices.map(({}, i) => i === q.correctChoiceIdx)
+          q.choices.map((rushedIdx) => {
+            return rushedData[rushedIdx]!.img;
+          })
         ),
         canHaveNoAnswer,
 
@@ -77,8 +80,8 @@ export const appRouter = t.router({
       return {
         isCorrect: question.correctChoiceIdx === input.choiceIdx,
         correctChoiceIdx: question.correctChoiceIdx,
-        answers: question.choices.map((_, i) =>
-          i === question.correctChoiceIdx ? 'James Webb' : 'Hubble'
+        answers: question.choices.map(
+          (rushedIdx) => rushedData[rushedIdx]!.telescope
         ),
       };
     }),
@@ -102,13 +105,27 @@ function genWireframe({
     return n < 0 ? null : n;
   }
 
+  const correct = canHaveNoAnswer
+    ? generateHardAnswer()
+    : rng.range(0, optsPerQuestion);
+
+  const seen = new Set<number>();
+
   const wireframe = Array.from({ length: numQuestions }).map((_, i) => ({
-    choices: Array.from({ length: optsPerQuestion }).map(() => ({
-      idx: 0,
-    })),
-    correctChoiceIdx: canHaveNoAnswer
-      ? generateHardAnswer()
-      : rng.range(0, optsPerQuestion),
+    choices: Array.from({ length: optsPerQuestion }).map((_, i) => {
+      const needJwst = i === correct;
+      let n: number;
+      do {
+        n = rng.range(0, rushedData.length);
+      } while (
+        seen.has(n) ||
+        (rushedData[n]!.telescope !== 'James Webb' && needJwst) ||
+        (rushedData[n]!.telescope === 'James Webb' && !needJwst)
+      );
+      seen.add(n);
+      return n;
+    }),
+    correctChoiceIdx: correct,
   }));
   return wireframe;
 }
