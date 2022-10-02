@@ -16,25 +16,7 @@ const trpcClient = trpc.createClient({
   ],
 });
 
-function Images({ page }: { page: number }) {
-  const images = trpc.images.useQuery(
-    { page },
-    {
-      staleTime: 5 * 60 * 1000,
-    }
-  );
-
-  return (
-    <>
-      {(images.data || []).map((src) => (
-        <img src={src} alt="image of space" key={src} />
-      ))}
-    </>
-  );
-}
-
 function HomePage() {
-  const [pages, setPages] = useState(1);
   const id = useMemo(() => nanoid(10), []);
 
   return (
@@ -69,13 +51,6 @@ function HomePage() {
       </div>
       <br />
       <br />
-
-      {/* <p className="read-the-docs">pics lmao</p>
-      {Array.from({ length: pages }).map((_, page) => (
-        <Images page={page} key={page} />
-      ))}
-      <br />
-      <button onClick={() => setPages((p) => p + 1)}>show more</button> */}
     </>
   );
 }
@@ -140,7 +115,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
       {game.data.canHaveNoAnswer && (
         <button
           onClick={() => answerQuestion(null)}
-          className="min-w-40 my-8 bg-yellow-500 px-5 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+          className="min-w-40 mt-8 bg-yellow-500 px-5 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
         >
           None of the above
         </button>
