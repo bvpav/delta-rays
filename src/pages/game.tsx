@@ -28,7 +28,7 @@ const ChoiceCard: React.FC<{
       className={classNames(
         'min-w-40 px-8 py-2 text-center text-2xl font-semibold uppercase transition-all duration-100 ',
         {
-          'bg-yellow-500 text-gray-900 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200':
+          'bg-yellow-500 text-gray-900 enabled:hover:bg-yellow-300 enabled:hover:shadow-sm enabled:hover:shadow-yellow-200':
             isCorrect === undefined,
           'bg-green-900 text-white': isCorrect === true,
           'bg-red-900 text-white': isCorrect === false,
@@ -132,6 +132,7 @@ const GameScreen: React.FC<{
           <ChoiceCard
             key={i}
             label={`Image ${i + 1}`}
+            clickable={currentChoice === undefined && !checkAnswer.isLoading}
             isCorrect={
               correctChoice !== undefined && currentChoice !== undefined
                 ? i === correctChoice
@@ -153,7 +154,20 @@ const GameScreen: React.FC<{
       {game.canHaveNoAnswer && (
         <button
           onClick={() => answerQuestion(null)}
-          className="min-w-40  mt-8 bg-yellow-500 px-5 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+          disabled={currentChoice !== undefined || checkAnswer.isLoading}
+          className={classNames(
+            'min-w-40  mt-8 px-5 py-2 text-center text-2xl font-semibold uppercase transition-all duration-100',
+            {
+              'bg-yellow-500 text-gray-900  enabled:hover:bg-yellow-300 enabled:hover:shadow-sm enabled:hover:shadow-yellow-200':
+                currentChoice === undefined || correctChoice !== null,
+              'bg-green-200 text-green-900':
+                currentChoice !== undefined && correctChoice === null,
+              'bg-red-200 text-red-900':
+                currentChoice !== undefined &&
+                currentChoice === null &&
+                correctChoice !== null,
+            }
+          )}
         >
           None of the above
         </button>
