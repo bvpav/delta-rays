@@ -5,11 +5,12 @@ import { InferProcedures, trpc } from '../utils/trpc-client';
 
 const ChoiceCard: React.FC<{
   label: string;
+  image: string;
   isCorrect?: boolean;
   buttonText?: string;
   clickable?: boolean;
   onAnswer: () => void;
-}> = ({ onAnswer, label, isCorrect, buttonText, clickable = true }) => (
+}> = ({ onAnswer, label, isCorrect, buttonText, image, clickable = true }) => (
   <div
     className={classNames(
       'flex flex-col items-center gap-3 px-6 pt-3 pb-5 text-center text-slate-900 transition-colors duration-100',
@@ -21,7 +22,13 @@ const ChoiceCard: React.FC<{
     )}
   >
     <span className="text-xl font-semibold">{label}</span>
-    <div className="h-64 w-96 bg-black md:h-96 md:w-96"></div>
+    <div className="bg-black ">
+      <img
+        src={image}
+        alt={label}
+        className="h-64 w-96 object-cover md:h-96 md:w-96"
+      />
+    </div>
     <button
       onClick={onAnswer}
       disabled={!clickable || isCorrect !== undefined}
@@ -128,10 +135,11 @@ const GameScreen: React.FC<{
         <span className="text-yellow-500">James Webb Space Telescope</span>?
       </h1>
       <div className="flex flex-col gap-7 xl:flex-row xl:gap-10">
-        {game.questions[currentQuestion]!.map((_, i) => (
+        {game.questions[currentQuestion]!.map((image, i) => (
           <ChoiceCard
             key={i}
             label={`Image ${i + 1}`}
+            image={image}
             clickable={currentChoice === undefined && !checkAnswer.isLoading}
             isCorrect={
               correctChoice !== undefined && currentChoice !== undefined
@@ -207,6 +215,11 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
     { difficulty, id },
     {
       staleTime: Infinity,
+      onSuccess({ questions }) {
+        questions.forEach((choices) =>
+          choices.forEach((choice) => (new Image().src = choice))
+        );
+      },
     }
   );
 
