@@ -5,8 +5,9 @@ import { InferProcedures, trpc } from '../utils/trpc-client';
 const ChoiceCard: React.FC<{
   label: string;
   isCorrect?: boolean;
+  buttonText?: string;
   onAnswer: () => void;
-}> = ({ onAnswer, label, isCorrect }) => (
+}> = ({ onAnswer, label, isCorrect, buttonText }) => (
   <div className="flex flex-col items-center gap-3 bg-white px-6 pt-3 pb-5 text-center text-slate-900">
     <span className="text-xl font-semibold">{label}</span>
     <div className="h-64 w-96 bg-black md:h-96 md:w-96"></div>
@@ -14,11 +15,7 @@ const ChoiceCard: React.FC<{
       onClick={onAnswer}
       className="min-w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
     >
-      {isCorrect !== undefined
-        ? isCorrect
-          ? 'Correct'
-          : 'Incorrect'
-        : 'Select'}
+      {buttonText || 'Select'}
     </button>
   </div>
 );
@@ -119,6 +116,11 @@ const GameScreen: React.FC<{
             isCorrect={
               correctChoice !== undefined && currentChoice !== undefined
                 ? i === correctChoice
+                : undefined
+            }
+            buttonText={
+              currentChoice !== undefined
+                ? checkAnswer.data?.answers && checkAnswer.data.answers[i]
                 : undefined
             }
             onAnswer={() => answerQuestion(i)}
