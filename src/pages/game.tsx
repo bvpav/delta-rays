@@ -25,6 +25,11 @@ const GameOverScreen: React.FC<{
 }> = ({ score, maxScore }) => (
   <div className="mt-10 flex flex-col items-center justify-center gap-6 xl:mt-0">
     <h1 className="font-alatsi text-4xl">Score</h1>
+    {score === maxScore && (
+      <p className="text-xl font-extrabold uppercase text-green-500">
+        Max Score!!
+      </p>
+    )}
     <h2 className="px-8 font-alatsi text-7xl">
       <span className="text-yellow-500">{score}</span>/{maxScore}
     </h2>
@@ -126,7 +131,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
     }
   );
 
-  return <GameOverScreen score={5} maxScore={10} />;
+  return <GameOverScreen score={10} maxScore={10} />;
   return <GameScreen game={game.data} />;
 };
 
