@@ -21,7 +21,7 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <div className="my-5 flex h-[100vh] w-full flex-col items-center p-0 xl:justify-center">
+        <div className="flex h-[100vh] w-full flex-col items-center px-0 py-7 xl:justify-center">
           <Route path="/">
             <HomePage />
           </Route>

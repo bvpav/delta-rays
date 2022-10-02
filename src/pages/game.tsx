@@ -19,6 +19,29 @@ const ChoiceCard: React.FC<{
   </div>
 );
 
+const GameOverScreen: React.FC<{
+  score: number;
+  maxScore: number;
+}> = ({ score, maxScore }) => (
+  <div className="mt-10 flex flex-col items-center justify-center gap-6 xl:mt-0">
+    <h1 className="font-alatsi text-4xl">Score</h1>
+    <h2 className="px-8 font-alatsi text-7xl">
+      <span className="text-yellow-500">{score}</span>/{maxScore}
+    </h2>
+    <div className="flex flex-col items-center justify-center gap-3">
+      <button className="min-w-40 bg-cyan-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-cyan-300 hover:shadow-sm hover:shadow-cyan-200">
+        Tweet Score
+      </button>
+      <Link
+        href="/"
+        className="min-w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+      >
+        New Game
+      </Link>
+    </div>
+  </div>
+);
+
 const GameScreen: React.FC<{
   game?: InferProcedures['game']['output'];
 }> = ({ game }) => {
@@ -88,16 +111,7 @@ const GameScreen: React.FC<{
       )}
     </>
   ) : game && numQuestions <= currentQuestion ? (
-    <>
-      <h1>
-        Score: {numCorrect}/{numQuestions}
-      </h1>
-      <Link href="/">
-        <a>
-          <button>New Game</button>
-        </a>
-      </Link>
-    </>
+    <GameOverScreen score={numCorrect} maxScore={numQuestions} />
   ) : null;
 };
 
@@ -112,6 +126,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
     }
   );
 
+  return <GameOverScreen score={5} maxScore={10} />;
   return <GameScreen game={game.data} />;
 };
 
