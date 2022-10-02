@@ -4,7 +4,7 @@ import { InferProcedures, trpc } from '../utils/trpc-client';
 
 const ChoiceCard: React.FC<{
   label: string;
-  isCorrect: boolean;
+  isCorrect?: boolean;
   onAnswer: () => void;
 }> = ({ onAnswer, label, isCorrect }) => (
   <div className="flex flex-col items-center gap-3 bg-white px-6 pt-3 pb-5 text-center text-slate-900">
@@ -14,7 +14,11 @@ const ChoiceCard: React.FC<{
       onClick={onAnswer}
       className="min-w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
     >
-      {isCorrect ? 'Correct' : 'Incorrect'}
+      {isCorrect !== undefined
+        ? isCorrect
+          ? 'Correct'
+          : 'Incorrect'
+        : 'Select'}
     </button>
   </div>
 );
@@ -69,21 +73,28 @@ const GameOverScreen: React.FC<{
 };
 
 const GameScreen: React.FC<{
-  game?: InferProcedures['game']['output'];
+  game: InferProcedures['game']['output'];
 }> = ({ game }) => {
+  const checkAnswer = trpc.checkAnswer.useMutation();
+
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [numCorrect, setNumCorrect] = useState(0);
-  const numQuestions = game?.questions?.length || 0;
+  const numQuestions = game.questions?.length || 0;
   const [currentChoice, setCurrentChoice] = useState<
     number | undefined | null
   >();
-  const correctChoice = game?.questions[currentQuestion]?.correctChoiceIdx;
+  const correctChoice = checkAnswer.data?.correctChoiceIdx;
 
-  function answerQuestion(choice: number | null) {
+  async function answerQuestion(choice: number | null) {
     if (currentChoice !== undefined) return;
+    const { correctChoiceIdx } = await checkAnswer.mutateAsync({
+      id: game.id,
+      difficulty: game.difficulty,
+      choiceIdx: choice,
+      questionIdx: currentQuestion,
+    });
     setCurrentChoice(choice);
-    // setCorrectChoice somehow here
-    if (choice === correctChoice) {
+    if (choice === correctChoiceIdx) {
       setNumCorrect((c) => c + 1);
     }
   }
@@ -94,18 +105,22 @@ const GameScreen: React.FC<{
     setCurrentQuestion((q) => q + 1);
   }
 
-  return game && 0 <= currentQuestion && currentQuestion < numQuestions ? (
+  return 0 <= currentQuestion && currentQuestion < numQuestions ? (
     <>
       <h1 className="mb-10 text-center font-alatsi text-5xl">
         Which image was taken by the{' '}
         <span className="text-yellow-500">James Webb Space Telescope</span>?
       </h1>
       <div className="flex flex-col gap-7 xl:flex-row xl:gap-10">
-        {game.questions[currentQuestion]!.choices.map((_, i) => (
+        {game.questions[currentQuestion]!.map((_, i) => (
           <ChoiceCard
             key={i}
             label={`Image ${i + 1}`}
-            isCorrect={i === correctChoice}
+            isCorrect={
+              correctChoice !== undefined && currentChoice !== undefined
+                ? i === correctChoice
+                : undefined
+            }
             onAnswer={() => answerQuestion(i)}
           />
         ))}
@@ -136,7 +151,7 @@ const GameScreen: React.FC<{
         </button>
       )}
     </>
-  ) : game && numQuestions <= currentQuestion ? (
+  ) : numQuestions <= currentQuestion ? (
     <GameOverScreen score={numCorrect} maxScore={numQuestions} />
   ) : null;
 };
@@ -152,7 +167,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
     }
   );
 
-  return <GameScreen game={game.data} />;
+  return game.data ? <GameScreen game={game.data} /> : null;
 };
 
 export default GamePage;

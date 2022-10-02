@@ -12,3 +12,5 @@ export default function mersenne(seed: string) {
     },
   };
 }
+
+export type RNG = ReturnType<typeof mersenne>;
