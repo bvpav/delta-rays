@@ -118,7 +118,6 @@ const GameScreen: React.FC<{
 
   function nextQuestion() {
     setCurrentChoice(undefined);
-    // unset correct choice maybe?
     setCurrentQuestion((q) => q + 1);
   }
 
@@ -136,6 +135,10 @@ const GameScreen: React.FC<{
             isCorrect={
               correctChoice !== undefined && currentChoice !== undefined
                 ? i === correctChoice
+                  ? true
+                  : i === currentChoice
+                  ? false
+                  : undefined
                 : undefined
             }
             buttonText={
