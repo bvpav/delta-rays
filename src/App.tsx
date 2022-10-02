@@ -88,16 +88,15 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
     { difficulty, id },
     {
       staleTime: Infinity,
-      cacheTime: Infinity,
     }
   );
 
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [numCorrect, setNumCorrect] = useState(0);
   const numQuestions = game?.data?.questions?.length || 0;
-  const [currentChoice, setCurrentChoice] = useState<number | undefined | null>(
-    0
-  );
+  const [currentChoice, setCurrentChoice] = useState<
+    number | undefined | null
+  >();
   const correctChoice = game.data?.questions[currentQuestion]?.correctChoiceIdx;
 
   function answerQuestion(choice: number | null) {
@@ -121,7 +120,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
         Which image was taken by the{' '}
         <span className="text-yellow-500">James Webb Space Telescope</span>?
       </h1>
-      <div className="flex flex-col gap-7 lg:flex-row lg:gap-10">
+      <div className="flex flex-col gap-7 xl:flex-row xl:gap-10">
         {game.data.questions[currentQuestion]!.choices.map((_, i) => (
           <div
             key={i}
@@ -141,7 +140,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
       {game.data.canHaveNoAnswer && (
         <button
           onClick={() => answerQuestion(null)}
-          className="min-w-40 mt-8 bg-yellow-500 px-5 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+          className="min-w-40 my-8 bg-yellow-500 px-5 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
         >
           None of the above
         </button>
@@ -182,7 +181,7 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <div className="m-0 flex h-[100vh] w-full flex-col items-center justify-center p-0">
+        <div className="my-5 flex h-[100vh] w-full flex-col items-center p-0 xl:justify-center">
           <Route path="/">
             <HomePage />
           </Route>
