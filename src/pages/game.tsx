@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { useMemo, useState } from 'react';
 import { Link } from 'wouter';
 import { InferProcedures, trpc } from '../utils/trpc-client';
@@ -6,14 +7,33 @@ const ChoiceCard: React.FC<{
   label: string;
   isCorrect?: boolean;
   buttonText?: string;
+  clickable?: boolean;
   onAnswer: () => void;
-}> = ({ onAnswer, label, isCorrect, buttonText }) => (
-  <div className="flex flex-col items-center gap-3 bg-white px-6 pt-3 pb-5 text-center text-slate-900">
+}> = ({ onAnswer, label, isCorrect, buttonText, clickable = true }) => (
+  <div
+    className={classNames(
+      'flex flex-col items-center gap-3 px-6 pt-3 pb-5 text-center text-slate-900 transition-colors duration-100',
+      {
+        'bg-white text-slate-900': isCorrect === undefined,
+        'bg-green-400 text-green-900': isCorrect === true,
+        'bg-red-400 text-red-900': isCorrect === false,
+      }
+    )}
+  >
     <span className="text-xl font-semibold">{label}</span>
     <div className="h-64 w-96 bg-black md:h-96 md:w-96"></div>
     <button
       onClick={onAnswer}
-      className="min-w-40 bg-yellow-500 px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+      disabled={!clickable || isCorrect !== undefined}
+      className={classNames(
+        'min-w-40 px-8 py-2 text-center text-2xl font-semibold uppercase transition-all duration-100 ',
+        {
+          'bg-yellow-500 text-gray-900 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200':
+            isCorrect === undefined,
+          'bg-green-900 text-white': isCorrect === true,
+          'bg-red-900 text-white': isCorrect === false,
+        }
+      )}
     >
       {buttonText || 'Select'}
     </button>
@@ -136,12 +156,16 @@ const GameScreen: React.FC<{
         </button>
       )}
       {currentChoice !== undefined && correctChoice !== undefined && (
-        <div className="my-10 w-1/2 bg-green-200 p-5 text-center font-alatsi text-xl font-bold uppercase">
-          {currentChoice === correctChoice ? (
-            <p className="text-green-900">Correct!</p>
-          ) : (
-            <p className="text-red-900">Incorrect!</p>
+        <div
+          className={classNames(
+            'my-10 w-1/2 p-5 text-center font-alatsi text-xl font-bold uppercase',
+            {
+              'bg-green-200 text-green-900': currentChoice === correctChoice,
+              'bg-red-200 text-red-900': currentChoice !== correctChoice,
+            }
           )}
+        >
+          {currentChoice === correctChoice ? 'Correct!' : 'Incorrect!'}
         </div>
       )}
       {currentChoice !== undefined && (

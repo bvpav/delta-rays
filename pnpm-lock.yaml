@@ -12,6 +12,7 @@ specifiers:
   '@vercel/node': ^2.5.21
   '@vitejs/plugin-react': ^2.1.0
   autoprefixer: ^10.4.12
+  classnames: ^2.3.2
   isomorphic-fetch: ^3.0.0
   nanoid: ^4.0.0
   postcss: ^8.4.17
@@ -32,6 +33,7 @@ dependencies:
   '@trpc/next': 10.0.0-proxy-beta.10_xmj2mjesevrjrxbwkl44itajwu
   '@trpc/react': 10.0.0-proxy-beta.10_sxbaiupdyaln4ngjk2ne6tly3m
   '@trpc/server': 10.0.0-proxy-beta.10
+  classnames: 2.3.2
   isomorphic-fetch: 3.0.0
   nanoid: 4.0.0
   react: 18.2.0
@@ -952,6 +954,10 @@ packages:
   /ci-info/2.0.0:
     resolution: {integrity: sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==}
     dev: true
+
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
+    dev: false
 
   /cli-boxes/2.2.1:
     resolution: {integrity: sha512-y4coMcylgSCdVinjiDBuR8PCC2bLjyGTwEmPb9NHR/QaNU6EUOXcTY/s6VjGMD6ENSEaeQYHCY0GNGS5jfMwPw==}

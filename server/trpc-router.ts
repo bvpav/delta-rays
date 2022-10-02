@@ -78,7 +78,7 @@ export const appRouter = t.router({
         isCorrect: question.correctChoiceIdx === input.choiceIdx,
         correctChoiceIdx: question.correctChoiceIdx,
         answers: question.choices.map((_, i) =>
-          i === question.correctChoiceIdx ? 'Correct,' : 'Incorrect,,,'
+          i === question.correctChoiceIdx ? 'James Webb' : 'Hubble'
         ),
       };
     }),
