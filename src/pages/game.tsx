@@ -26,7 +26,7 @@ const GameOverScreen: React.FC<{
   <div className="mt-10 flex flex-col items-center justify-center gap-6 xl:mt-0">
     <h1 className="font-alatsi text-4xl">Score</h1>
     {score === maxScore && (
-      <p className="text-xl font-extrabold uppercase text-green-500">
+      <p className="rounded-xl bg-green-600 p-1 px-3 text-xl font-extrabold uppercase text-white shadow-sm shadow-green-600">
         Max Score!!
       </p>
     )}
