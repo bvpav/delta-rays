@@ -91,6 +91,14 @@ const GameOverScreen: React.FC<{
         >
           New Game
         </Link>
+        <a
+          href="https://www.jwst.nasa.gov/"
+          rel="noreferrer nofollow"
+          target="_blank"
+          className="min-w-40 bg-white px-8 py-2 text-center text-2xl font-semibold uppercase text-gray-900 transition-all duration-100 hover:bg-yellow-300 hover:shadow-sm hover:shadow-yellow-200"
+        >
+          Learn more about James Webb
+        </a>
       </div>
     </div>
   );
@@ -223,6 +231,7 @@ const GamePage: React.FC<InferProcedures['game']['input']> = ({
     }
   );
 
+  return <GameOverScreen score={5} maxScore={5} />;
   return game.data ? <GameScreen game={game.data} /> : null;
 };
 
